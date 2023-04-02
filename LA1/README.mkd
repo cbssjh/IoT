@@ -1,0 +1,224 @@
+
+# COM3505 Lab Assessment 1
+                                          - Junhyeok Seo (170163831)
+
+<h2>Breadboard, and some more parts from the kit</h2>
+<img src="images/2.jpg" height="300" width="440">
+
+- ESP32 feather board
+- breadboard
+- 3mm red LED
+- 3mm yellow LED
+- 2 x 3mm green LED
+- USB C cable
+- 4 x 120Ω resistors
+- 6 way ribbon cable
+
+<h2>How to set up the breadboard</h2>
+
+[Changes from ESP32 Feather to ESP32S3]
+
+<img src="images/3.jpg" height="300" width="220"><img src="images/3_2.jpg" height="300" width="220">
+
+Take your ESP32 feather device and carefully lay it in place on the breadboard over the holes indicated.
+
+<img src="images/3_3.jpg" height="300" width="220">
+
+And plug the USB C cable.
+
+<h1>Change settings</h1>
+
+<h2>1. Change the name of SSID and the password</h2>
+<img src="images/4.png" height="100" width="440">
+
+->
+<img src="images/4_1.png" height="100" width="440">
+
+Change the password more complicated to secure the board.(At least 8 digits.)
+
+
+
+<h2>2. IP address and port number: Change the IP Address</h2>
+<img src="images/5.png" height="100" width="440">
+
+->
+<img src="images/5_2.png" height="100" width="440">
+
+Change the IP address!
+
+<h1>Set up the LEDs</h1>
+<img src="images/6.jpg" height="300" width="220">
+
+Add the red, green LEDs, and two 120Ω resistors.
+
+<img src="images/6_1.jpg" height="300" width="220">
+<img src="images/6_2.jpg" height="300" width="220">
+
+Add 4 jumper leads(way ribbon cables) to complete the circuit.
+
+<img src="images/6_3.jpg" height="300" width="220">
+
+And add the yellow, green LEDs, and two 120Ω resistors.
+
+<img src="images/6_5.jpg" height="300" width="220">
+
+Add 2 jumper leads to complete the circuit.
+
+(red = 9;
+green = 10;
+yellow_wifi = 12;
+green_wifi = 11;)
+
+
+<h2>How to run the code (1)</h2>
+<img src="images/7.jpg" height="300" width="440">
+
+First of all, plug in the USB C cable to the device. And put the board into bootloader mode by holding 'boot' and pressing (and releasing) 'reset'.
+
+
+<img src="images/7_1.jpg" height="300" width="440">
+
+Make sure the port is correct.
+
+<img src="images/7_2.jpg" height="300" width="440">
+
+And upload it!
+
+<h2>How to run the code (2)</h2>
+<img src="images/8_1.png" height="300" width="440">
+
+Firstly, connect to the Access Point from the ESP32S3.
+
+<img src="images/8_2.png" height="300" width="440">
+
+Goes to the http://192.168.4.1 to connect the Wifi. And click the 'wifi access point'.
+
+<img src="images/8_3.png" height="300" width="440">
+
+Choose the access point what we want to connect.
+
+
+<img src="images/8_4.png" height="200" width="440">
+
+Fill the blank with the password, and Submit.
+
+<img src="images/8_5.png" height="300" width="440">
+
+After you click the 'wifi status', you can see the status of the connection. For me, I have used the 'uos-other' Wifi by using the WiFi.begin() below:
+
+-> <img src="images/8_6.png" height="30" width="440">
+
+
+<h2>How to run the code (3)</h2>
+<img src="images/9.jpg" height="300" width="440">
+
+To set up a local HTTP server, use 'python -m http.server --bind 192.168.4.2'.
+
+<img src="images/9_1.jpg" height="300" width="440">
+
+After uploaded the code, press reset button on the board.
+
+<img src="images/9_2.jpg" height="300" width="440">
+
+And set the port again.
+
+<img src="images/9_3.jpg" height="300" width="440">
+
+Click the Serial Monitor!
+
+<img src="images/9_4.jpg" height="300" width="440">
+
+Then we can see the process of connection of Wifi and the OTA update.
+(sometimes there are some unknown errors, then we can try to unplug the cable and replug it. And close the serial monitor and reopen it)
+
+<h2>How to run the code (4)</h2>
+Now, there are four different scenarios.
+<h2>1. Wi-fi is disconnected</h2>
+<img src="images/10.png" height="200" width="440">
+
+Firstly, if the Wifi is not connected, the serial monitor prints "trying to connect to Wifi.......".
+
+<img src="images/10_1.png" height="150" width="440">
+
+According to this code, when the Wifi status is disconnected, there are two ways to show to users such as serial monitor("trying to connect to Wifi..") and the 'yellow_wifi' LED (yellow LED).
+
+<img src="images/11.jpg" height="300" width="220">
+
+As you can see only the yellow LED is on!
+
+<h2>2. The firmware is up to date</h2>
+<img src="images/12.png" height="250" width="440">
+
+Secondly, if the Wifi is connected and the firmware is up to date, the serial monitor prints "firmware is up to date".
+
+<img src="images/12_5.png" height="150" width="440">
+
+According to this code, when the Wifi status is connected, there are two ways to show to users such as serial monitor("connected :)") and the 'green_wifi' LED (leftside green LED).
+
+
+<img src="images/12_4.png" height="150" width="440">
+
+According to this code, when the firmwareVersion is equal or higher than highestAvailableVersion, there are two ways to show to users such as the serial monitor("firmware is up to date") and the 'yellow_wifi' LED (yellow LED).
+
+
+<img src="images/12_1.jpg" height="300" width="220">
+
+As you can see only the 'green_wifi' LED(leftside green LED) is on! And also the red and green LEDs are on!
+
+<h2>3. Not able to get version</h2>
+<img src="images/12_2.png" height="250" width="440">
+
+Thirdly, if the Wifi is connected but the firmware cannot be updated or checked, the serial monitor prints "couldn't get version! rtn code : ".
+
+<img src="images/14.png" height="150" width="440">
+
+According to this code, when the response code is lower than 0, there are two ways to show to users such as the serial monitor("couldn't get version! rtn code : ".) and the red LED is on!
+
+<img src="images/13.jpg" height="300" width="220">
+
+As you can see only the 'green_wifi' LED(leftside green LED) is on! And also the red LED is on!
+
+<h2>4. Update begin!</h2>
+
+<img src="images/17.png" height="250" width="440">
+
+Lastly, if the Wifi is connected and the firmware can be updated, the serial monitor prints "starting OTA may take a minute or two...", "update done, now finishing...", "update successfully finished; rebooting...".
+
+<img src="images/16.png" height="250" width="440">
+
+According to this code, when the Update begins, there are two ways to show to users such as the serial monitor("starting OTA may take a minute or two...", "update done, now finishing...".) and the green LED(right side) is blinking! Once update is done, the green LED is on!
+
+<img src="images/17_1.jpg" height="300" width="220">
+
+As you can see only the 'green_wifi' LED(leftside green LED) is on! And also the green LED(right side) is on! (after the blinking)
+
+<h1>Testing</h1>
+<h2>How to test OTA</h2>
+
+<img src="images/00.png" height="80" width="440">
+
+Firstly, we need to change the version number. (eg. 5 -> 6)
+
+<img src="images/00_1.png" height="300" width="440">
+
+Secondly, click the 'Export compiled Binary' to make a .bin file.
+
+<img src="images/00_2.png" height="80" width="440">
+
+Thirdly, the file name needs to be changed to the number. (eg. 6)
+
+
+<img src="images/00_3.png" height="80" width="440">
+
+Fourthly, we need to have a text file called 'version'.
+
+<img src="images/00_4.png" height="150" width="440">
+
+Fifthly, we need to write the number. (eg. 6)
+
+<img src="images/17.png" height="150" width="440">
+
+Lastly, we need to unplug and replug the cable! And check the serial monitor!
+
+<h2>Video</h2>
+Here is the link: https://drive.google.com/file/d/1f5yfZrCjF59o4xvhVkVEEfy7-gWo42FM/view?usp=share_link
